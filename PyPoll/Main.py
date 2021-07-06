@@ -64,14 +64,14 @@ candidates_vote_percent = [round((candidate1_votes/row_count),3)*100,
 
 
 
-print(f"-----------------{candidate_votes}")
+#print(f"-----------------{candidate_votes}")
 
 
 candidate_votes_sorted = [candidate_votes[0],candidate_votes[1],candidate_votes[2],candidate_votes[3]] 
 
 candidate_votes_sorted.sort(reverse=True)
 
-
+#winner of the election based on popular vote
 if candidate_votes_sorted[0] == candidate_votes[0]:
     winner_candidate = candidate_list[0]
 elif candidate_votes_sorted[0] == candidate_votes[1]:
@@ -81,10 +81,12 @@ elif candidate_votes_sorted[0] == candidate_votes[2]:
 elif candidate_votes_sorted[0] == candidate_votes[3]:
     winner_candidate = candidate_list[3]    
 
-
+#complete list of cadidates who received votes
 print(candidate_list)
+#total number of votes each candidate won
 print(candidate_votes)
 print(candidate_votes_sorted)
+#percentage of votes each candidate won
 print(candidates_vote_percent)
 
 
@@ -95,6 +97,38 @@ print(candidates_vote_percent)
             
 #         candidate_list.extend([each_candidate,candidate_votes])              
 # print(candidate_list)    
+print("--------------------------------------")
+#output
+txt_output_path = 'C:/Users/nallu/OneDrive/Desktop/python-challenge/PyPoll/analysis/output.txt'
+#     # Open the file using "write" mode. Specify the variable to hold the contents
+with open(txt_output_path, 'w', newline='') as txtfile:
+    
+    txtfile.write("Election Results")
+    txtfile.write('\n')
+    txtfile.write("----------------------------------------")
+    txtfile.write('\n')
+    txtfile.write(f"Total Votes: {row_count}")
+    txtfile.write('\n')
+    txtfile.write("----------------------------------------")
+    txtfile.write('\n')
+    txtfile.write(f"{candidate_list[0]}: {round(candidates_vote_percent[0],3)}% ({candidate1_votes})")
+    txtfile.write('\n')
+    txtfile.write(f"{candidate_list[1]}: {round(candidates_vote_percent[1],3)}% ({candidate2_votes})")
+    txtfile.write('\n')
+    txtfile.write(f"{candidate_list[2]}: {round(candidates_vote_percent[2],3)}% ({candidate3_votes})")
+    txtfile.write('\n')
+    txtfile.write(f"{candidate_list[3]}: {round(candidates_vote_percent[3],3)}% ({candidate4_votes})")
+    txtfile.write('\n')
+    txtfile.write("----------------------------------------")
+    txtfile.write('\n')
+    txtfile.write(f"Winner: {winner_candidate}")
+    txtfile.write('\n')
+    txtfile.write("----------------------------------------")
+    txtfile.write('\n')
+
+
+
+
 print("--------------------------------------")
         
 
