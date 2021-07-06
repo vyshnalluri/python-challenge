@@ -3,8 +3,7 @@ import csv
 import operator
 csv_path = 'C:/Users/nallu/OneDrive/Desktop/python-challenge/PyBank/Resources/budget_data.csv'
 
-#temp_csv_path = 'C:/Users/nallu/OneDrive/Desktop/python-challenge/PyBank/analysis/temp.csv'
-temp_csv_path = 'C:/Users/nallu/OneDrive/Desktop/temp.csv'
+temp_csv_path = 'C:/Users/nallu/OneDrive/Desktop/python-challenge/PyBank/Resources/temp.csv'
 
 total_months = 0
 row_count = 0
@@ -14,7 +13,10 @@ lowest_profit_row = []
 previous_profit = 0
 final_list = []
 total_change = 0
-
+greatest_change = 0
+lowest_change = 0
+greatest_change_date = 0
+lowest_change_date = 0
 
 #open and read from csv file
 with open(csv_path) as csv_file:
@@ -64,43 +66,62 @@ with open(csv_path) as csv_file:
 with open(temp_csv_path) as csv_file:
     temp_csv_reader = csv.reader(csv_file, delimiter=',')
     
-
-    print(f"sort - {sorted(temp_csv_reader, key=operator.itemgetter(2), reverse=True)}")
-
-
     #calculate total change to calculate average change
     for avg_row in temp_csv_reader:
-        total_change = total_change + int(avg_row[2])
+       # print(f"inside total change= {int(avg_row[2])}")
+        current_change = int(avg_row[2])
+        total_change = total_change + current_change
+        
+        # calculate greatest increase in profits (date and ammount) over the entire period
+        if current_change > greatest_change:     
+            greatest_change = current_change
+            greatest_change_date =(avg_row[0])
+
+        # calculate greatest decrease in profits (date and ammount) over the entire period
+        if current_change < lowest_change:     
+            lowest_change = current_change
+            lowest_change_date =(avg_row[0])
+
     print(f"total change= {total_change}")
 
     #average change
     average_change = round(total_change/total_months, 2)
     print(f"average change = {average_change}")
 
-    # calculate greatest increase in profits (date and ammount) over the entire period
-    # calculate greatest decrease in profits (date and ammount) over the entire period  
-
     
-    temp_csv_reader_sorted = sorted(temp_csv_reader, key=operator.itemgetter(2), reverse=True)
+print(f"greatest_change = {greatest_change}")
+print(f"greatest_change_date = {greatest_change_date}")
+print(f"lowest_change = {lowest_change}")
+print(f"lowest_change_date = {lowest_change_date}")
+
+print("--------------------------------------")
+
+#output
+txt_output_path = 'C:/Users/nallu/OneDrive/Desktop/python-challenge/PyBank/analysis/output.txt'
+
+# Open the file using "write" mode. Specify the variable to hold the contents
+with open(txt_output_path, 'w', newline='') as txtfile:
     
-    for temp_row in temp_csv_reader_sorted:
-        print(temp_row)
-        highest_profit_row = temp_row
-        break
+    txtfile.write("Financial Analysis")
+    txtfile.write('\n')
+    txtfile.write("--------------------------------")
+    txtfile.write('\n')
+    txtfile.write(f"Total Months: {total_months}")
+    txtfile.write('\n')
+    txtfile.write(f"Total: {net_profit_loss}")
+    txtfile.write('\n')
+    txtfile.write(f"Average Change = {average_change}")
+    txtfile.write('\n')
+    txtfile.write(f"Greatest Increase in Profits: {greatest_change_date}: ({greatest_change})")
+    txtfile.write('\n')
+    txtfile.write(f"Greatest Decrease in Profits: {lowest_change_date}: ({lowest_change})")
 
-    #print(f"highest_profit_row = {highest_profit_row}")
-
-
-
-
-
-
-
-
-   
+print("--------------------------------------")   
 
 print("Financial Analysis")
 print("--------------------------------")
 print(f"Total Months: {total_months}")
 print(f"Total: {net_profit_loss}")
-#print(f"Greatest Increase in Profits: {highest_profit_row[0]} ({highest_profit_row[1]})")
+print(f"Average Change = {average_change}")
+print(f"Greatest Increase in Profits: {greatest_change_date}: ({greatest_change})")
+print(f"Greatest Decrease in Profits: {lowest_change_date}: ({lowest_change})")
